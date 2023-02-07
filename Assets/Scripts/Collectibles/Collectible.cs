@@ -4,17 +4,9 @@ using UnityEngine;
 
 public abstract class Collectible : MonoBehaviour
 {
-    private void Start()
-    {
-        CollectibleSpawner.Instance.Subscribe(this);
-    }
+    public abstract void PickUp();
 
-    public virtual void PickUp()
-    {
-        CollectibleSpawner.Instance.UnSubscribe(this);
-    }
-
-    public void Destroy()
+    public void DeInit()
     {
         CollectibleSpawner.Instance.UnSubscribe(this);
         Destroy(this.gameObject);

@@ -33,15 +33,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Airstrike",
-                    "type": "Button",
-                    "id": "8b7f6f48-3de8-4128-b584-fd3ad602f330",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "80b02448-3225-48c5-a3a6-954b0f135ab0",
@@ -175,18 +166,18 @@
                 },
                 {
                     "name": "",
-                    "id": "92dc462a-af2d-4677-abce-7f8377702556",
+                    "id": "2fb35ed2-1256-423a-a850-5940df713ef7",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Airstrike",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "2fb35ed2-1256-423a-a850-5940df713ef7",
+                    "id": "af09fd57-5315-45cf-80c2-06cd055befad",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LaserBeam : MonoBehaviour
 {
-    [SerializeField] private float m_damagePerTick;
+    [SerializeField] private float m_damagePerTick;    
 
     private void OnTriggerStay2D(Collider2D _other)
     {
+        if (_other.gameObject.layer == LayerMask.NameToLayer("Player")) return;
+
         IKillable obj = _other.GetComponent<IKillable>();
 
         if (obj != null)

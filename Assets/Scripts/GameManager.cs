@@ -7,13 +7,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] private PlayerInput m_playerInput;
+    [SerializeField] private ScoreOrbs m_scoreOrbsPref;
 
     public Rect MatchField;
 
     [HideInInspector] public bool IsRunning;
     [HideInInspector] public bool IsPaused;
 
+    public float TimeSinceStart { get; private set; }
+
     public float Tick = 0.1f;
+
+    public float CurrentScore;
 
     private void Awake()
     {
@@ -36,10 +41,17 @@ public class GameManager : MonoBehaviour
             else
             {
                 Time.timeScale = 1;
+                TimeSinceStart += Time.deltaTime;
+                CurrentScore += Time.deltaTime;
             }
         }
         else
             Time.timeScale = 0;
+    }
+
+    public string ConvertScoreToInt()
+    {
+        return CurrentScore.ToString("F1");
     }
 
     public void SwitchAction(string _actionName)
@@ -53,21 +65,29 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.OnGameStart();
         SwitchAction("Player");
     }
+    public void SpawnScoreOrbs(Vector2 _pos)
+    {
+        int amount = Random.Range(2, 6);
+        ScoreOrbs sc;
 
+        for (int i = 0; i < amount; i++)
+        {
+            sc = Instantiate(m_scoreOrbsPref);
+            sc.Init(_pos);
+        }
+    }
     public void OnGameOver()
     {
         IsPaused = true;
         UIManager.Instance.OnGameOver();
-        StartCoroutine(EnemySpawner.Instance.DespawnAllEnemies());
-        StartCoroutine(CollectibleSpawner.Instance.DespawnAllCollectibles());
+
+        StartCoroutine(EnemySpawner.Instance.DespawnAllEntities());
+        StartCoroutine(CollectibleSpawner.Instance.DespawnAllEntities());
+        StartCoroutine(AirstrikeSpawner.Instance.DespawnAllEntities());
 
         Projectile[] ps = FindObjectsOfType<Projectile>();
         foreach (Projectile p in ps)
             Destroy(p.gameObject);
-
-        Explosive[] es = FindObjectsOfType<Explosive>();
-        foreach (Explosive exp in es)
-            Destroy(exp.gameObject);
 
         SwitchAction("Freeze");
     }

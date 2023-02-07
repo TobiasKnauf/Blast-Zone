@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IKillable
 {
     public void GetDamage(float _value, Vector2 _dir, float _knockbackForce);
-    public void Die(Vector2 _dir);
+    public void Die(Vector2 _dir, bool _spawnOrbs);
 }

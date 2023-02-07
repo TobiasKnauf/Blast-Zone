@@ -31,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,7 +51,6 @@ MonoBehaviour:
   m_moveSpeed: 2
   m_maxHealth: 100
   m_shootCooldown: 0
-  m_knockBackForce: 500
   rb: {fileID: 538102926945583246}
   anim: {fileID: 5991334595477931816}
 --- !u!212 &9122395263219723343
@@ -130,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
 --- !u!50 &538102926945583246
 Rigidbody2D:

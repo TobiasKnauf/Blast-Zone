@@ -6,9 +6,7 @@ public class LaserBeamCollectible : Collectible
 {
     public override void PickUp()
     {
-        base.PickUp();
-
         PlayerController.Instance.HasLaserBeam = true;
-        Destroy(this.gameObject);
+        DeInit();
     }
 }

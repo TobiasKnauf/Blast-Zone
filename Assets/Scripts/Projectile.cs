@@ -22,9 +22,10 @@ public class Projectile : MonoBehaviour
         IKillable obj = _other.GetComponent<IKillable>();
 
         if (obj != null)
-            obj.GetDamage(damage, rb.velocity, 500);
-
-        Destroy();
+        { 
+            obj.GetDamage(damage, rb.velocity, 1000);
+            Destroy();
+        }
     }
     private void Destroy()
     {

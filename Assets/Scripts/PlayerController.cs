@@ -15,11 +15,9 @@ public class PlayerController : MonoBehaviour, IKillable
     [SerializeField] private float m_laserBeamDuration;
     [SerializeField] private float m_shootCooldown;
     [SerializeField] private float m_dashCooldown;
-    [SerializeField] private float m_airstrikeCooldown;
 
     [SerializeField] private Projectile m_projectilePref;
-    [SerializeField] private Explosive m_explosivePref;
-
+    [SerializeField] private ParticleSystem m_dashTrail;
     [SerializeField] private LaserBeam m_laserBeam;
 
     private Rigidbody2D rb;
@@ -33,7 +31,6 @@ public class PlayerController : MonoBehaviour, IKillable
     private float shootTimer = 10000;
     private float dashTimer = 1000;
     private float timeSinceDash = 0;
-    private float airstrikeTimer = 1000;
 
     private bool isDashing;
     private bool isBeaming;
@@ -60,7 +57,6 @@ public class PlayerController : MonoBehaviour, IKillable
         // Timer increase
         shootTimer += Time.deltaTime;
         dashTimer += Time.deltaTime;
-        airstrikeTimer += Time.deltaTime;
     }
 
 
@@ -82,14 +78,6 @@ public class PlayerController : MonoBehaviour, IKillable
             heldShooting = true;
         if (_ctx.canceled)
             heldShooting = false;
-    }
-    public void OnAirstrike(CallbackContext _ctx)
-    {
-        if (isDashing) return;
-        if (airstrikeTimer < m_airstrikeCooldown) return;
-
-        Instantiate(m_explosivePref).transform.position = mousePos;
-        airstrikeTimer = 0;
     }
     public void OnDash(CallbackContext _ctx)
     {
@@ -158,6 +146,7 @@ public class PlayerController : MonoBehaviour, IKillable
         if (dashTimer < m_dashCooldown) return;     // return if dash is on cooldown
         if (moveVector == Vector2.zero) return;     // return if player is not moving
 
+        m_dashTrail.Play();
         dashDir = moveVector;
         timeSinceDash = 0;
         isDashing = true;
@@ -169,6 +158,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
         if (timeSinceDash >= m_dashDuration)
         {
+            m_dashTrail.Stop();
             isDashing = false;
             col.enabled = true;
             return;
@@ -190,13 +180,14 @@ public class PlayerController : MonoBehaviour, IKillable
             return;
         }
     }
-    public void Die(Vector2 _dir)
+    public void Die(Vector2 _dir, bool _spawnOrbs = false)
     {
         m_laserBeam.gameObject.SetActive(false);
-        VisualsManager.Instance.PlayDeathParticles(this.transform.position, _dir);
-        GameManager.Instance.OnGameOver();
+        m_dashTrail.gameObject.SetActive(false);
 
+        VisualsManager.Instance.PlayDeathParticles(this.transform.position, _dir);
         this.GetComponent<SpriteRenderer>().enabled = false;
+        GameManager.Instance.OnGameOver();
     }
 
     private void OnTriggerEnter2D(Collider2D _other)
