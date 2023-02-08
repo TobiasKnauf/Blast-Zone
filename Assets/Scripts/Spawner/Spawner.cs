@@ -15,7 +15,7 @@ public abstract class Spawner<T> : MonoBehaviour
 
 
     protected Vector2 spawnPos;
-    private float timer;
+    protected float timer;
 
     protected virtual void Awake()
     {
@@ -27,13 +27,15 @@ public abstract class Spawner<T> : MonoBehaviour
     {
         if (!GameManager.Instance.IsRunning || GameManager.Instance.IsPaused) return;
 
+        if (m_entitiesPrefab.Length == 0) return;
+
         if (timer > m_timeUntilNextSpawn)
             SpawnEntity();
 
         timer += Time.deltaTime;
     }
 
-    protected void SpawnEntity()
+    protected virtual void SpawnEntity()
     {
         timer = 0;
 
@@ -47,13 +49,13 @@ public abstract class Spawner<T> : MonoBehaviour
 
     protected abstract void CreateEntity();
 
-    private Vector2 GetRandomPosInsideArea()
+    protected Vector2 GetRandomPosInsideArea()
     {
         return new Vector2(
             UnityEngine.Random.Range(GameManager.Instance.MatchField.xMin, GameManager.Instance.MatchField.xMax),
             UnityEngine.Random.Range(GameManager.Instance.MatchField.yMin, GameManager.Instance.MatchField.yMax));
     }
-    private bool IsNonValidPosition(Vector2 _pos)
+    protected virtual bool IsNonValidPosition(Vector2 _pos)
     {
         foreach (Rect r in m_noSpawnAreas)
             if (r.Contains(_pos))

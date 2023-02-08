@@ -20,7 +20,19 @@ public class ScoreOrbs : Collectible
 
     public override void PickUp()
     {
-        GameManager.Instance.CurrentScore += 10 * transform.localScale.x;
+        float scoreValue = 15 * transform.localScale.x * PlayerController.Instance.ComboValue;
+        float chargeValue = 7.5f * transform.localScale.x;
+
+        GameManager.Instance.CurrentScore += scoreValue;
+
+        if (!PlayerController.Instance.IsBeaming)
+        {
+            PlayerController.Instance.ChargeValue += chargeValue;
+            UIManager.Instance.AddCharge(chargeValue);
+        }
+
+        SoundManager.Instance.PlaySound(ESound.Collect);
+
         DeInit();
     }
 
