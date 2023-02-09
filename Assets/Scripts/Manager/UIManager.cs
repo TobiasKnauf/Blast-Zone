@@ -67,6 +67,25 @@ public class UIManager : MonoBehaviour
         m_chargeImage.color = Color.white;
         m_chargeImage.fillAmount = 0f;
     }
+    public IEnumerator ResetChargeBar()
+    {
+        float t = 5;
+
+        while (t > 0)
+        {
+            if (t / 5 > .75f && t / 5 < 1f)
+                m_chargeImage.color = Color.red;
+            if (t / 5 > .5f && t / 5 < .75f)
+                m_chargeImage.color = Color.yellow;
+            if( t / 5 >= 0f && t / 5 < .5f)
+                m_chargeImage.color = Color.white;
+
+
+            m_chargeImage.fillAmount = t / 5;
+            t -= Time.deltaTime;
+            yield return null;
+        }
+    }
     #endregion
 
     public IEnumerator OnRestart()
@@ -74,7 +93,7 @@ public class UIManager : MonoBehaviour
         blackFadeImage.SetTrigger("FadeIn");
 
         yield return new WaitForSecondsRealtime(1);
-        
+
         SceneManager.LoadScene(0);
     }
 

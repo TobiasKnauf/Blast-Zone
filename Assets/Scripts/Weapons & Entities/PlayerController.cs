@@ -142,7 +142,8 @@ public class PlayerController : MonoBehaviour, IKillable
         IsBeaming = true;
         SoundManager.Instance.PlaySound(ESound.Laser);
         ChargeValue = 0;
-        UIManager.Instance.ResetCharge();
+        //UIManager.Instance.ResetCharge();
+        StartCoroutine(UIManager.Instance.ResetChargeBar());
         m_laserBeam.gameObject.SetActive(true);
         yield return new WaitForSeconds(m_laserBeamDuration);
         m_laserBeam.gameObject.SetActive(false);

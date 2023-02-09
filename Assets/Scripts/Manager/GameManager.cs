@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
 
         SwitchAction("Freeze");
 
-        PlayerPrefs.SetFloat("Highscore", CurrentScore);
+        if (PlayerPrefs.GetFloat("Highscore") < CurrentScore)
+            PlayerPrefs.SetFloat("Highscore", CurrentScore);
     }
     public void OnRestart()
     {
