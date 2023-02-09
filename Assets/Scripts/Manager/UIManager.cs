@@ -34,7 +34,6 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
     }
-
     private void Start()
     {
         if (PlayerPrefs.HasKey("Highscore"))
