@@ -66,9 +66,9 @@ public class PlayerController : MonoBehaviour, IKillable
             comboDecreaseTimer = 0;
         }
 
-        if(ComboValue < 1)
+        if (ComboValue < 1)
             ComboValue = 1;
-        if(ComboValue > 10)
+        if (ComboValue > 10)
             ComboValue = 10;
 
         // Timer increase
@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour, IKillable
     public void OnLook(CallbackContext _ctx)
     {
         if (isDashing) return;
+        if (GameManager.Instance.IsPaused) return;
 
         mousePos = Camera.main.ScreenToWorldPoint(_ctx.ReadValue<Vector2>());
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text m_highScore;
 
     [SerializeField] private Animator m_resumeButton;
+
+    [SerializeField] private Animator blackFadeImage;
 
     private void Awake()
     {
@@ -66,6 +69,15 @@ public class UIManager : MonoBehaviour
         m_chargeImage.fillAmount = 0f;
     }
     #endregion
+
+    public IEnumerator OnRestart()
+    {
+        blackFadeImage.SetTrigger("FadeIn");
+
+        yield return new WaitForSecondsRealtime(1);
+        
+        SceneManager.LoadScene(0);
+    }
 
     public void AddCombo(float _value)
     {
@@ -109,6 +121,7 @@ public class UIManager : MonoBehaviour
 
         if (GameManager.Instance.IsPaused) return;
 
+        StartCoroutine(Soundtrack.Instance.StartMusic());
         m_resumeButton.transform.localScale = Vector3.one;
         m_resumeButton.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         GameManager.Instance.IsPaused = true;

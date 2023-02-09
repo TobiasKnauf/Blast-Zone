@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnRestart()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(UIManager.Instance.OnRestart());
     }
 
     private void OnDrawGizmos()

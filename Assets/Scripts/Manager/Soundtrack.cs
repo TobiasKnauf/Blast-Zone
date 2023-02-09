@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Soundtrack : MonoBehaviour
 {
@@ -22,13 +23,22 @@ public class Soundtrack : MonoBehaviour
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoad;
+
         StartCoroutine(StartMusic());
     }
 
-    private IEnumerator StartMusic()
+    private void OnSceneLoad(Scene _scene, LoadSceneMode _lsm)
+    {
+        StartCoroutine(StartMusic());
+    }
+
+    public IEnumerator StartMusic()
     {
         m_musicSource.volume = m_startVolume;
-        m_musicSource.Play();
+
+        if (!m_musicSource.isPlaying)
+            m_musicSource.Play();
 
         while (m_musicSource.volume < 1)
         {
