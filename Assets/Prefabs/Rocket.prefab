@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5922714704788972772}
   - component: {fileID: 5922714704788972775}
-  - component: {fileID: 5922714704788972774}
   - component: {fileID: 5922714704788972769}
   - component: {fileID: 5922714704788972768}
+  - component: {fileID: 1422660976084129593}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5922714704788972774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5922714704788972771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f64b50810b088c4aa9ecfd189ae3f6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 5922714704788972769}
-  stats: {fileID: 11400000, guid: fa3dd7b9e5c40d446b4de6ed88788e7f, type: 2}
 --- !u!50 &5922714704788972769
 Rigidbody2D:
   serializedVersion: 4
@@ -138,3 +124,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1422660976084129593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922714704788972771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebf34fb8746b8d42991565bdc274765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5922714704788972769}
+  stats: {fileID: 0}
+  explosion: {fileID: 1517395964774122649, guid: 72344e58e3f29d047904712e19256e2e, type: 3}

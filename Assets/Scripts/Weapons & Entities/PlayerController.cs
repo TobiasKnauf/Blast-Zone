@@ -7,18 +7,15 @@ public class PlayerController : MonoBehaviour, IKillable
 {
     public static PlayerController Instance;
 
-    [SerializeField] private float m_moveSpeed;
-    [SerializeField] private float m_dashSpeed;
-    [SerializeField] private float m_maxHealth;
+    public PlayerStats PlayerStats;
 
+    [SerializeField] private float m_dashSpeed;
     [SerializeField] private float m_dashDuration;
-    [SerializeField] private float m_laserBeamDuration;
-    [SerializeField] private float m_shootCooldown;
     [SerializeField] private float m_dashCooldown;
 
-    [SerializeField] private Projectile m_projectilePref;
+    [SerializeField] public WeaponStats weaponStats;
     [SerializeField] private ParticleSystem m_dashTrail;
-    [SerializeField] private LaserBeam m_laserBeam;
+    [SerializeField] private LaserBeam m_beam;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -27,14 +24,12 @@ public class PlayerController : MonoBehaviour, IKillable
     private Vector2 moveVector;
     private Vector2 dashDir;
 
-    private float health;
     private float shootTimer = 10000;
     private float dashTimer = 1000;
     private float timeSinceDash = 0;
     private float comboDecreaseTimer = 0;
 
     private bool isDashing;
-    [HideInInspector] public bool IsBeaming;
     private bool heldShooting;
 
     public float ChargeValue;
@@ -44,7 +39,6 @@ public class PlayerController : MonoBehaviour, IKillable
     private void Awake()
     {
         Instance = this;
-        health = m_maxHealth;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
     }
@@ -54,9 +48,6 @@ public class PlayerController : MonoBehaviour, IKillable
 
         if (heldShooting)
             Shoot();
-
-        if (ChargeValue >= 100f)
-            StartCoroutine(StartLaserBeam());
 
         KeepPlayerInBounds();
 
@@ -96,6 +87,21 @@ public class PlayerController : MonoBehaviour, IKillable
             heldShooting = true;
         if (_ctx.canceled)
             heldShooting = false;
+
+        if (weaponStats.weaponType is EWeaponType.Laser)
+        {
+            if (_ctx.started)
+            {
+                m_beam.gameObject.SetActive(true);
+                m_beam.Launch(-transform.right, this.gameObject.layer);
+                SoundManager.Instance.PlaySound(ESound.Laser);
+            }
+            if (_ctx.canceled)
+            {
+                m_beam.gameObject.SetActive(false);
+                SoundManager.Instance.StopSound(ESound.Laser);
+            }
+        }
     }
     public void OnDash(CallbackContext _ctx)
     {
@@ -126,28 +132,33 @@ public class PlayerController : MonoBehaviour, IKillable
     #region Combat
     private void Shoot()
     {
-        if (IsBeaming) return;
         if (isDashing) return;
-        if (shootTimer < m_shootCooldown) return;
+        if (shootTimer < weaponStats.ReloadTime) return;
+        if (weaponStats.weaponType is EWeaponType.Laser) return;
 
-        Projectile p = Instantiate(m_projectilePref);
-        p.transform.position = this.transform.position;
-        p.Launch(20, transform.up, 25f, this.gameObject.layer);
-        SoundManager.Instance.PlaySound(ESound.Shoot);
+        int leftmost = -Mathf.FloorToInt(weaponStats.NumberOfProjectiles / 2f);
+        int rightmost = weaponStats.NumberOfProjectiles - Mathf.FloorToInt(weaponStats.NumberOfProjectiles / 2f);
+
+        for (int i = leftmost; i < rightmost; i++)
+        {
+            Weapon w = Instantiate(weaponStats.Weapon);
+            w.transform.up = transform.up;
+            // set position
+            w.transform.position = this.transform.position;
+            w.transform.position += w.transform.up * .75f;
+
+            if (weaponStats.NumberOfProjectiles % 2 == 0)
+                w.transform.position += w.transform.right * (i + 0.5f);
+            else
+                w.transform.position += w.transform.right * i;
+
+            Vector3 direction = Quaternion.Euler(0, 0, -i * 10f) * transform.up;
+
+            w.Launch(direction, this.gameObject.layer);
+            SoundManager.Instance.PlaySound(ESound.Shoot);
+        }
 
         shootTimer = 0;
-    }
-    private IEnumerator StartLaserBeam()
-    {
-        IsBeaming = true;
-        SoundManager.Instance.PlaySound(ESound.Laser);
-        ChargeValue = 0;
-        //UIManager.Instance.ResetCharge();
-        StartCoroutine(UIManager.Instance.ResetChargeBar());
-        m_laserBeam.gameObject.SetActive(true);
-        yield return new WaitForSeconds(m_laserBeamDuration);
-        m_laserBeam.gameObject.SetActive(false);
-        IsBeaming = false;
     }
     #endregion
 
@@ -167,11 +178,10 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         if (isDashing) return;                       // return if is dashing
 
-        rb.velocity = m_moveSpeed * Time.fixedDeltaTime * moveVector;
+        rb.velocity = PlayerStats.MoveSpeed * Time.fixedDeltaTime * moveVector;
     }
     private void StartDash()
     {
-        if (IsBeaming) return;
         if (isDashing) return;                      // return if is already dashing
         if (dashTimer < m_dashCooldown) return;     // return if dash is on cooldown
         if (moveVector == Vector2.zero) return;     // return if player is not moving
@@ -203,8 +213,8 @@ public class PlayerController : MonoBehaviour, IKillable
 
     public void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
     {
-        health -= _value;
-        if (health <= 0)
+        PlayerStats.Health -= _value;
+        if (PlayerStats.Health <= 0)
         {
             Die(_dir);
             return;
@@ -212,7 +222,7 @@ public class PlayerController : MonoBehaviour, IKillable
     }
     public void Die(Vector2 _dir, bool _spawnOrbs = false)
     {
-        m_laserBeam.gameObject.SetActive(false);
+        //m_laserBeam.gameObject.SetActive(false);
         m_dashTrail.gameObject.SetActive(false);
 
         VisualsManager.Instance.PlayDeathParticles(this.transform.position, _dir);

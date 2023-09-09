@@ -25,11 +25,8 @@ public class ScoreOrbs : Collectible
 
         GameManager.Instance.CurrentScore += scoreValue;
 
-        if (!PlayerController.Instance.IsBeaming)
-        {
-            PlayerController.Instance.ChargeValue += chargeValue;
-            UIManager.Instance.AddCharge(chargeValue);
-        }
+        PlayerController.Instance.ChargeValue += chargeValue;
+        UIManager.Instance.AddCharge(chargeValue);
 
         SoundManager.Instance.PlaySound(ESound.Collect);
 

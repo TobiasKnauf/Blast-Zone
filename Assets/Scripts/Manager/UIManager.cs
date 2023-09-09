@@ -88,6 +88,11 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    public void PickWeapon(WeaponStats _weaponRef)
+    {
+        PlayerController.Instance.weaponStats = _weaponRef;
+    }
+
     public IEnumerator OnRestart()
     {
         blackFadeImage.SetTrigger("FadeIn");

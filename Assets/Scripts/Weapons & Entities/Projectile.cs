@@ -1,45 +1,18 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Weapon
 {
-    [SerializeField] private Rigidbody2D rb;
-    private float damage;
-    private int noDmgLayer;
-
-    public void Launch(float _force, Vector2 _dir, float _damage, int _noDmgLayer)
+    public override void Launch(Vector2 _dir, int _noDmgLayer)
     {
-        damage = _damage;
-        noDmgLayer = _noDmgLayer;
-        transform.up = _dir;
-        rb.AddForce(transform.up * _force, ForceMode2D.Impulse);
+        destroyOnHit = true;
+        destroyAfter10 = true;
+        destroyAfterDistance = true;
 
-        Invoke(nameof(Destroy), 5f);
+        base.Launch(_dir, _noDmgLayer);
     }
 
-    private void OnTriggerEnter2D(Collider2D _other)
+    protected override void OnDeathEffect()
     {
-        if (_other.gameObject.layer == noDmgLayer) return;
-        if (_other.CompareTag("Border"))
-        {
-            Destroy();
-            return;
-        }
 
-        IKillable obj = _other.GetComponent<IKillable>();
-
-        if (obj != null)
-        {
-            obj.GetDamage(damage, rb.velocity, 750);
-            UIManager.Instance.AddCombo(.1f);
-            PlayerController.Instance.ComboValue += .1f;
-            SoundManager.Instance.PlaySound(ESound.Hit);
-            Destroy(this.gameObject);
-        }
-    }
-    private void Destroy()
-    {
-        UIManager.Instance.AddCombo(-.2f);
-        PlayerController.Instance.ComboValue -= .2f;
-        Destroy(this.gameObject);
     }
 }
