@@ -166,4 +166,19 @@ public class UIManager : MonoBehaviour
         m_inGamePanel.SetActive(true);
         GameManager.Instance.SwitchAction("Player");
     }
+
+    public void OpenUpgradeMenu()
+    {
+        GameManager.Instance.IsPaused = true;
+
+        // list 3 different upgrades
+
+        // show current upgrades and stats
+    }
+    public void CloseUpgradeMenu()
+    {
+        // close upgrade menu
+
+        GameManager.Instance.IsPaused = false;
+    }
 }

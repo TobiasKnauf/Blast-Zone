@@ -40,8 +40,8 @@ public class LaserBeam : Weapon
             float determinedDamage = crits ? damage * PlayerController.Instance.PlayerStats.CritMulitplier : damage;
 
             obj.GetDamage(determinedDamage, transform.right, stats.Knockback);
-            UIManager.Instance.AddCombo(.005f);
-            PlayerController.Instance.ComboValue += .005f;
+            UIManager.Instance.AddCombo(.0025f);
+            PlayerController.Instance.ComboValue += .0025f;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stats/Weapon Stats", fileName = "SO_WeaponStats")]
-public class WeaponStats : Stats
+public class WeaponStats : ScriptableObject
 {
     [SerializeField] private string name = "New Weapon";
     [SerializeField] private Weapon weapon;
@@ -16,6 +16,7 @@ public class WeaponStats : Stats
     [SerializeField] private float splashDamage = 0;
     [SerializeField] private float splashRadius = 0;
     [SerializeField] private float knockback = 750f;
+    [SerializeField] private float pierces = 1;
 
     private float runtimeDamage;
     private float runtimeSpeed;
@@ -25,6 +26,7 @@ public class WeaponStats : Stats
     private float runtimeSplashDamage;
     private float runtimeSplashRadius;
     private float runtimeKnockback;
+    private float runtimePierces;
 
     public string Name { get { return name; } }
     public Weapon Weapon { get { return weapon; } }
@@ -36,7 +38,7 @@ public class WeaponStats : Stats
     public float SplashDamage { get { return runtimeSplashDamage; } set { runtimeSplashDamage = value; } }
     public float SplashRadius { get { return runtimeSplashRadius; } set { runtimeSplashRadius = value; } }
     public float Knockback { get { return runtimeKnockback; } set { runtimeKnockback = value; } }
-
+    public float Pierces { get { return runtimePierces; } set { runtimePierces = value; } }
     private void OnEnable()
     {
         runtimeDamage = damage;
@@ -47,6 +49,7 @@ public class WeaponStats : Stats
         runtimeSplashDamage = splashDamage;
         runtimeSplashRadius = splashRadius;
         runtimeKnockback = knockback;
+        runtimePierces = pierces;
 
         weapon.stats = this;
     }

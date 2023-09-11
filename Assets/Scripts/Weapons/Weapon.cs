@@ -92,4 +92,35 @@ public abstract class Weapon : MonoBehaviour
         OnDeathEffect();
         Destroy(this.gameObject);
     }
+    public virtual void ApplyUpgrade(WeaponUpgrade _upgrade)
+    {
+        if (!_upgrade.WeaponTypes.Contains(stats)) return;
+
+        foreach (var upgrade in _upgrade.Upgrades)
+        {
+            switch (upgrade.Type)
+            {
+                case EWeaponUpgradeTypes.Projectile_Speed:
+                    stats.Speed += (stats.Speed / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Attack_Speed:
+                    stats.ReloadTime -= (stats.ReloadTime / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Damage:
+                    stats.Damage += (stats.Damage / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Attack_Range:
+                    stats.Range += (stats.Range / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Knockback:
+                    stats.Knockback += (stats.Knockback / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Projectiles:
+                    stats.Speed += upgrade.Amount;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

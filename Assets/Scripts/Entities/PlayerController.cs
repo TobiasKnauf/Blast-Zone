@@ -51,9 +51,10 @@ public class PlayerController : MonoBehaviour, IKillable
 
         KeepPlayerInBounds();
 
-        if (comboDecreaseTimer > 2f)
+        if (comboDecreaseTimer > 1f)
         {
-            ComboValue -= .05f;
+            ComboValue -= (ComboValue / 100f) * 2f;
+            UIManager.Instance.AddCombo(-(ComboValue / 100f) * 2f);
             comboDecreaseTimer = 0;
         }
 
@@ -61,6 +62,13 @@ public class PlayerController : MonoBehaviour, IKillable
             ComboValue = 1;
         if (ComboValue > 10)
             ComboValue = 10;
+
+        #region Experience
+        if (ChargeValue >= 100f)
+        {
+            UIManager.Instance.OpenUpgradeMenu();
+        }
+        #endregion
 
         // Timer increase
         shootTimer += Time.deltaTime;

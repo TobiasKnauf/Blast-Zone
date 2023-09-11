@@ -18,8 +18,9 @@ MonoBehaviour:
   damage: 75
   speed: 10
   range: 7.5
-  numberOfProjectiles: 3
+  numberOfProjectiles: 1
   reloadTime: 1
   splashDamage: 50
   splashRadius: 3
   knockback: 500
+  pierces: 1

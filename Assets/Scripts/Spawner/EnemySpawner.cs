@@ -16,6 +16,14 @@ public class EnemySpawner : Spawner<Enemy>
             m_timeUntilNextSpawn = .25f;
     }
 
+    protected override bool IsNonValidPosition(Vector2 _pos)
+    {
+        if (Vector2.Distance(spawnPos, PlayerController.Instance.transform.position) > (25f * Mathf.Clamp((GameManager.Instance.TimeSinceStart / 300f), 1f, 3f)))
+            return true;
+
+        return base.IsNonValidPosition(_pos);
+    }
+
     protected override void CreateEntity()
     {
         StartCoroutine(StartEnemySpawn(spawnPos));

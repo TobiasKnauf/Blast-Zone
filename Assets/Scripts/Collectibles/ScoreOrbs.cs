@@ -21,7 +21,9 @@ public class ScoreOrbs : Collectible
     public override void PickUp()
     {
         float scoreValue = 15 * transform.localScale.x * PlayerController.Instance.ComboValue;
-        float chargeValue = 7.5f * transform.localScale.x;
+        //float chargeValue = 7.5f * transform.localScale.x;
+        float chargeValue = 7.5f * transform.localScale.x / Mathf.Clamp((GameManager.Instance.TimeSinceStart / 120f), 1, float.MaxValue);
+
 
         GameManager.Instance.CurrentScore += scoreValue;
 

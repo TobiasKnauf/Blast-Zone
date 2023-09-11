@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stats/Player Stats", fileName = "SO_PlayerStats")]
-public class PlayerStats : Stats
+public class PlayerStats : ScriptableObject
 {
     [SerializeField] private float health = 100f;
     [SerializeField] private float armor = 0;
