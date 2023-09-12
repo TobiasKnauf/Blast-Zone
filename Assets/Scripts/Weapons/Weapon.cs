@@ -116,7 +116,7 @@ public abstract class Weapon : MonoBehaviour
                     stats.Knockback += (stats.Knockback / 100) * upgrade.Amount;
                     break;
                 case EWeaponUpgradeTypes.Projectiles:
-                    stats.Speed += upgrade.Amount;
+                    stats.NumberOfProjectiles += (int)upgrade.Amount;
                     break;
                 default:
                     break;

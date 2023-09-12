@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private bool isDashing;
     private bool heldShooting;
 
+    public int currentLevel = 0;
     public float ChargeValue;
     public float ComboValue;
 
@@ -160,7 +161,17 @@ public class PlayerController : MonoBehaviour, IKillable
             else
                 w.transform.position += w.transform.right * i;
 
-            Vector3 direction = Quaternion.Euler(0, 0, -i * 10f) * transform.up;
+            Vector3 direction;
+
+            if (weaponStats.NumberOfProjectiles % 2 == 0)
+            {
+                if (i >= 0)
+                    direction = Quaternion.Euler(0, 0, -(i + 1) * 20f) * transform.up;
+                else
+                    direction = Quaternion.Euler(0, 0, -i * 20f) * transform.up;
+            }
+            else
+                direction = Quaternion.Euler(0, 0, -i * 20f) * transform.up;
 
             w.Launch(direction, this.gameObject.layer);
             SoundManager.Instance.PlaySound(ESound.Shoot);
@@ -246,5 +257,38 @@ public class PlayerController : MonoBehaviour, IKillable
 
         if (obj != null)
             obj.PickUp();
+    }
+
+    public void ApplyUpgrade(PlayerUpgrade _upgrade)
+    {
+        foreach (var upgrade in _upgrade.Upgrades)
+        {
+            switch (upgrade.Type)
+            {
+                case EPlayerUpgradeTypes.Health:
+                    PlayerStats.Health += upgrade.Amount;
+                    break;
+                case EPlayerUpgradeTypes.Armor:
+                    PlayerStats.Armor += upgrade.Amount;
+                    break;
+                case EPlayerUpgradeTypes.Movement_Speed:
+                    PlayerStats.MoveSpeed += (PlayerStats.MoveSpeed / 100) * upgrade.Amount;
+                    break;
+                case EPlayerUpgradeTypes.Crit_Chance:
+                    PlayerStats.CritChance = upgrade.Amount;
+                    break;
+                case EPlayerUpgradeTypes.Crit_Multiplier:
+                    PlayerStats.CritMulitplier += (PlayerStats.CritMulitplier / 100) * upgrade.Amount;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void ResetCharge()
+    {
+        currentLevel++;
+        ChargeValue = 0;
     }
 }

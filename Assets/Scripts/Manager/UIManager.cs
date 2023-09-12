@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_inGamePanel;
     [SerializeField] private GameObject m_gameOverPanel;
     [SerializeField] private GameObject m_pausePanel;
+    [SerializeField] private GameObject m_upgradePanel;
 
     [SerializeField] private TMP_Text m_scoreText;
     [SerializeField] private TMP_Text m_pauseScore;
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator m_resumeButton;
 
     [SerializeField] private Animator blackFadeImage;
+
 
     private void Awake()
     {
@@ -77,7 +79,7 @@ public class UIManager : MonoBehaviour
                 m_chargeImage.color = Color.red;
             if (t / 5 > .5f && t / 5 < .75f)
                 m_chargeImage.color = Color.yellow;
-            if( t / 5 >= 0f && t / 5 < .5f)
+            if (t / 5 >= 0f && t / 5 < .5f)
                 m_chargeImage.color = Color.white;
 
 
@@ -170,15 +172,15 @@ public class UIManager : MonoBehaviour
     public void OpenUpgradeMenu()
     {
         GameManager.Instance.IsPaused = true;
-
+        m_upgradePanel.SetActive(true);
         // list 3 different upgrades
-
+        UpgradeManager.Instance.SetUpgrades();
         // show current upgrades and stats
     }
     public void CloseUpgradeMenu()
     {
+        m_upgradePanel.SetActive(false);
         // close upgrade menu
-
         GameManager.Instance.IsPaused = false;
     }
 }
