@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IKillable
+public abstract class Enemy : MonoBehaviour, IKillable
 {
-    [SerializeField] private float m_moveSpeed;
-    [SerializeField] private float m_maxHealth;
-    [SerializeField] private float m_shootCooldown;
+    [SerializeField] protected float m_moveSpeed;
+    [SerializeField] protected float m_maxHealth;
+    [SerializeField] private Sprite m_sprite;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private Animator anim;
-    private float health;
+    protected float health; 
 
-    Vector2 dir;
+    protected Vector2 dir;
 
     private float immuneTimer;
 
@@ -21,14 +22,16 @@ public class Enemy : MonoBehaviour, IKillable
 
         Invoke(nameof(EnableCollider), .25f);
     }
+
+    protected abstract void UpdateEnemy();
     private void Update()
     {
         if (!GameManager.Instance.IsRunning || GameManager.Instance.IsPaused) return;
 
         dir = (PlayerController.Instance.transform.position - this.transform.position).normalized;
-        this.transform.position += m_moveSpeed * Time.deltaTime * (Vector3)dir;
-
         transform.up = dir;
+
+        UpdateEnemy();
 
         immuneTimer += Time.deltaTime;
     }
@@ -38,7 +41,7 @@ public class Enemy : MonoBehaviour, IKillable
         GetComponent<Collider2D>().isTrigger = false;
     }
 
-    public void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
+    public virtual void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
     {
         if (immuneTimer < GameManager.Instance.Tick) return;
 
@@ -55,15 +58,22 @@ public class Enemy : MonoBehaviour, IKillable
 
     }
 
+    protected abstract void OnDeathEffect();
+
     public void Die(Vector2 _dir, bool _spawnOrbs = true)
     {
         if (this == null) return;
+
+        immuneTimer = -1000f;
+
+        OnDeathEffect();
 
         CameraScript.Instance.StartCoroutine(CameraScript.Instance.Shake(.1f, .02f));
         VisualsManager.Instance.PlayDeathParticles(this.transform.position, _dir);
         if (_spawnOrbs)
             GameManager.Instance.SpawnScoreOrbs(this.transform.position);
         EnemySpawner.Instance.UnSubscribe(this);
+
         Destroy(this.gameObject);
     }
 

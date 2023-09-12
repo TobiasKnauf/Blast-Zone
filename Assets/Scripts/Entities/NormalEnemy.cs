@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalEnemy : MonoBehaviour
+public class NormalEnemy : Enemy
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void OnDeathEffect()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void UpdateEnemy()
     {
-        
+        this.transform.position += m_moveSpeed * Time.deltaTime * (Vector3)dir;
     }
 }

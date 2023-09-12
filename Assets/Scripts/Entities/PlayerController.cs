@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour, IKillable
     public float ChargeValue;
     public float ComboValue;
 
+    private bool knockback;
+
+    private float immuneTimer;
 
     private void Awake()
     {
@@ -75,6 +78,7 @@ public class PlayerController : MonoBehaviour, IKillable
         shootTimer += Time.deltaTime;
         dashTimer += Time.deltaTime;
         comboDecreaseTimer += Time.deltaTime;
+        immuneTimer += Time.deltaTime;
     }
 
 
@@ -196,6 +200,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void Move()
     {
         if (isDashing) return;                       // return if is dashing
+        if (knockback) return;
 
         rb.velocity = PlayerStats.MoveSpeed * Time.fixedDeltaTime * moveVector;
     }
@@ -232,12 +237,26 @@ public class PlayerController : MonoBehaviour, IKillable
 
     public void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
     {
+        if (immuneTimer < GameManager.Instance.Tick) return;
+
+        Debug.Log("Ouch");
+
         PlayerStats.Health -= _value;
         if (PlayerStats.Health <= 0)
         {
             Die(_dir);
             return;
         }
+
+        immuneTimer = 0;
+        StartCoroutine(StartKnockback(_dir, _knockbackForce));
+    }
+    private IEnumerator StartKnockback(Vector2 _dir, float _force)
+    {
+        knockback = true;
+        rb.AddForce(_dir.normalized * _force * Time.deltaTime, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(.15f);
+        knockback = false;
     }
     public void Die(Vector2 _dir, bool _spawnOrbs = false)
     {

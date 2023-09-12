@@ -11903,7 +11903,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entitiesPrefab:
-  - {fileID: -8288708114648879536, guid: a3e418a38ee787641aa3f0b6ac9fc60f, type: 3}
+  - {fileID: 379814327234706849, guid: a3e418a38ee787641aa3f0b6ac9fc60f, type: 3}
+  - {fileID: -2755647018584956233, guid: 85f2eb21d41c273468cdc447e7fd36e2, type: 3}
+  - {fileID: -5951432549337165446, guid: be225fb230919da419f6feec105fb6bd, type: 3}
   m_timeUntilNextSpawn: 0.75
   m_noSpawnAreas: []
   m_noSpawnRadiusFromPlayer: 8

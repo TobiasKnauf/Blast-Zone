@@ -6,11 +6,16 @@ public class Explosion : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer renderer;
 
-    public void Detonate(float _splashDamage, float _radius)
+    public void Detonate(float _splashDamage, float _radius, bool _hitAll = false)
     {
         this.transform.localScale = Vector2.one * _radius * 2f;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(this.transform.position, _radius, 1 << 7);
+        Collider2D[] hits;
+        
+        if (!_hitAll)
+            hits = Physics2D.OverlapCircleAll(this.transform.position, _radius, 1 << 7);
+        else
+            hits = Physics2D.OverlapCircleAll(this.transform.position, _radius);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -29,9 +34,9 @@ public class Explosion : MonoBehaviour
         while (renderer.color.a > 0)
         {
             renderer.color = new Color(
-                renderer.color.r, 
-                renderer.color.g, 
-                renderer.color.b, 
+                renderer.color.r,
+                renderer.color.g,
+                renderer.color.b,
                 renderer.color.a - (.5f * Time.deltaTime));
             yield return null;
         }
