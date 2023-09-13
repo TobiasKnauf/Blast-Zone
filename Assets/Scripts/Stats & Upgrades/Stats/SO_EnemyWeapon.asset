@@ -16,7 +16,7 @@ MonoBehaviour:
   weapon: {fileID: 5922714704788972774, guid: d9d9e33aad36dee4d86e64ff8c6d42a1, type: 3}
   weaponType: 0
   damage: 50
-  speed: 10
+  speed: 5
   range: 50
   numberOfProjectiles: 1
   reloadTime: 0.8

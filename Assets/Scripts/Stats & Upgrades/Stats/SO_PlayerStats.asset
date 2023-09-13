@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd084898c475743acea6f7edaaa9de, type: 3}
   m_Name: SO_PlayerStats
   m_EditorClassIdentifier: 
-  health: 300
+  maxHealth: 1000
   armor: 0
   moveSpeed: 200
   critChance: 0.15

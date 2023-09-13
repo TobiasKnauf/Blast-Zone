@@ -2,13 +2,14 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IKillable
 {
-    [SerializeField] protected float m_moveSpeed;
-    [SerializeField] protected float m_maxHealth;
+    public EnemyStats Stats;
     [SerializeField] private Sprite m_sprite;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private SpriteRenderer m_armorSprite;
     [SerializeField] private Animator anim;
-    protected float health; 
+    protected float health;
+    protected int armor;
 
     protected Vector2 dir;
 
@@ -18,9 +19,16 @@ public abstract class Enemy : MonoBehaviour, IKillable
     {
         this.transform.position = _spawnPos;
         GetComponent<BoxCollider2D>().isTrigger = true;
-        health = m_maxHealth;
+        health = Stats.MaxHealth;
 
         Invoke(nameof(EnableCollider), .25f);
+    }
+    private void Start()
+    {
+        if (Stats.Armor > 0)
+            m_armorSprite.gameObject.SetActive(true);
+
+        armor = Stats.Armor;
     }
 
     protected abstract void UpdateEnemy();
@@ -44,6 +52,16 @@ public abstract class Enemy : MonoBehaviour, IKillable
     public virtual void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
     {
         if (immuneTimer < GameManager.Instance.Tick) return;
+
+        if(armor > 0)
+        {
+            armor--;
+
+            if (armor <= 0)
+                m_armorSprite.gameObject.SetActive(false);
+
+            return;
+        }
 
         health -= _value;
         if (health <= 0)

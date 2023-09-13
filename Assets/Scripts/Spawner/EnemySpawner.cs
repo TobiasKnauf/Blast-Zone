@@ -10,7 +10,7 @@ public class EnemySpawner : Spawner<Enemy>
     {
         base.Update();
 
-        m_timeUntilNextSpawn -= Time.deltaTime * GameManager.Instance.TimeSinceStart * 0.0001f;
+        m_timeUntilNextSpawn -= Time.deltaTime * GameManager.Instance.TimeSinceStart / 10000f;
 
         if (m_timeUntilNextSpawn < .25f)
             m_timeUntilNextSpawn = .25f;
@@ -31,13 +31,21 @@ public class EnemySpawner : Spawner<Enemy>
 
     private IEnumerator StartEnemySpawn(Vector2 _pos)
     {
+        int rnd = Random.Range(0, m_entitiesPrefab.Length);
+
+        if (Random.Range(0, 1f) > m_entitiesPrefab[rnd].Stats.SpawnChance)
+        {
+            StartCoroutine(StartEnemySpawn(_pos));
+            yield break;
+        }
+
         Animator a = Instantiate(m_spawnPointIdicator, m_spawnPointCollector);
         a.transform.position = _pos;
 
         yield return new WaitForSeconds(3f);
 
         Destroy(a.gameObject);
-        Enemy e = Instantiate(m_entitiesPrefab[Random.Range(0, m_entitiesPrefab.Length)]);
+        Enemy e = Instantiate(m_entitiesPrefab[rnd]);
         e.Init(_pos);
         Subscribe(e);
     }

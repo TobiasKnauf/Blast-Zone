@@ -53,4 +53,17 @@ public class WeaponStats : ScriptableObject
 
         weapon.stats = this;
     }
+
+    public void ResetStats()
+    {
+        runtimeDamage = damage;
+        runtimeSpeed = speed;
+        runtimeRange = range;
+        runtimeNOP = numberOfProjectiles;
+        runtimeReloadTime = reloadTime;
+        runtimeSplashDamage = splashDamage;
+        runtimeSplashRadius = splashRadius;
+        runtimeKnockback = knockback;
+        runtimePierces = pierces;
+    }
 }

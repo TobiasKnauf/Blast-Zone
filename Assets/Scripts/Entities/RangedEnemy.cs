@@ -16,7 +16,7 @@ public class RangedEnemy : Enemy
     protected override void UpdateEnemy()
     {
         if (Vector2.Distance(PlayerController.Instance.transform.position, this.transform.position) >= 6f)
-            this.transform.position += m_moveSpeed * Time.deltaTime * (Vector3)dir;
+            this.transform.position += Stats.MoveSpeed * Time.deltaTime * (Vector3)dir;
         else
         {
             if (shootTimer <= 0)

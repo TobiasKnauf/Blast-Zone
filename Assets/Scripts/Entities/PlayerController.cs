@@ -16,9 +16,12 @@ public class PlayerController : MonoBehaviour, IKillable
     [SerializeField] public WeaponStats weaponStats;
     [SerializeField] private ParticleSystem m_dashTrail;
     [SerializeField] private LaserBeam m_beam;
+    [SerializeField] private SpriteRenderer m_armorSprite;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
+
+    private int armor;
 
     private Vector2 mousePos;
     private Vector2 moveVector;
@@ -45,6 +48,14 @@ public class PlayerController : MonoBehaviour, IKillable
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+    }
+    private void Start()
+    {
+        if (PlayerStats.Armor > 0)
+            m_armorSprite.gameObject.SetActive(true);
+
+        armor = PlayerStats.Armor;
+
     }
     private void Update()
     {
@@ -239,7 +250,15 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         if (immuneTimer < GameManager.Instance.Tick) return;
 
-        Debug.Log("Ouch");
+        if (armor > 0)
+        {
+            armor--;
+
+            if (armor <= 0)
+                m_armorSprite.gameObject.SetActive(false);
+
+            return;
+        }
 
         PlayerStats.Health -= _value;
         if (PlayerStats.Health <= 0)
@@ -285,10 +304,11 @@ public class PlayerController : MonoBehaviour, IKillable
             switch (upgrade.Type)
             {
                 case EPlayerUpgradeTypes.Health:
-                    PlayerStats.Health += upgrade.Amount;
+                    PlayerStats.MaxHealth += upgrade.Amount;
+                    PlayerStats.Health = PlayerStats.MaxHealth;
                     break;
                 case EPlayerUpgradeTypes.Armor:
-                    PlayerStats.Armor += upgrade.Amount;
+                    PlayerStats.Armor += (int)upgrade.Amount;
                     break;
                 case EPlayerUpgradeTypes.Movement_Speed:
                     PlayerStats.MoveSpeed += (PlayerStats.MoveSpeed / 100) * upgrade.Amount;
@@ -308,6 +328,10 @@ public class PlayerController : MonoBehaviour, IKillable
     public void ResetCharge()
     {
         currentLevel++;
+        UIManager.Instance.ResetChargeBarInstant();
         ChargeValue = 0;
+
+        if (currentLevel % 2 == 0)
+            GameManager.Instance.BuffEnemy();
     }
 }

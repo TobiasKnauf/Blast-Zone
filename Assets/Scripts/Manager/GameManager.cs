@@ -14,6 +14,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool IsRunning;
     [HideInInspector] public bool IsPaused;
 
+    [SerializeField] private WeaponStats[] enemyWeaponStats;
+    [SerializeField] private EnemyStats[] enemyStats;
+
+    private float startScoreValue = 15f;
+    public float ScoreValue;
+
     public float TimeSinceStart { get; private set; }
 
     public float Tick = 0.1f;
@@ -28,6 +34,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SwitchAction("Freeze");
+        ScoreValue = startScoreValue;
+
     }
 
     private void Update()
@@ -45,11 +53,21 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 1;
                 TimeSinceStart += Time.deltaTime;
-                CurrentScore += Time.deltaTime * PlayerController.Instance.ComboValue;
+                CurrentScore += Time.deltaTime/* * PlayerController.Instance.ComboValue*/;
+
             }
         }
         else
             Time.timeScale = 0;
+    }
+
+    public void BuffEnemy()
+    {
+        Debug.Log("Enemies buffed");
+        foreach (var enemy in enemyStats)
+        {
+            enemy.MaxHealth += (enemy.MaxHealth / 100) * 33f;
+        }
     }
 
     public void SwitchAction(string _actionName)
@@ -94,6 +112,17 @@ public class GameManager : MonoBehaviour
     }
     public void OnRestart()
     {
+        foreach (var s in enemyStats)
+        {
+            s.ResetStats();
+        }
+        foreach (var w in enemyWeaponStats)
+        {
+            w.ResetStats();
+        }
+        ScoreValue = startScoreValue;
+        PlayerController.Instance.PlayerStats.ResetStats();
+        PlayerController.Instance.weaponStats.ResetStats();
         StartCoroutine(UIManager.Instance.OnRestart());
     }
 

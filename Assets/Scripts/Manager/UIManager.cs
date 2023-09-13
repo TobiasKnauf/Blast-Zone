@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator m_chargeAnim;
     [SerializeField] private Image m_chargeImage;
 
+    [SerializeField] private Image m_healthImage;
+    [SerializeField] private TMP_Text m_healthText;
+
     [SerializeField] private TMP_Text m_comboText;
     [SerializeField] private Animator m_comboAnim;
 
@@ -47,6 +50,9 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         m_scoreText.text = "" + GameManager.Instance.CurrentScore.ToString("F0");
+
+        m_healthImage.fillAmount = PlayerController.Instance.PlayerStats.Health / PlayerController.Instance.PlayerStats.MaxHealth;
+        m_healthText.text = $"{PlayerController.Instance.PlayerStats.Health} / {PlayerController.Instance.PlayerStats.MaxHealth}";
     }
 
     #region Charge
@@ -54,13 +60,13 @@ public class UIManager : MonoBehaviour
     {
         float newVal = PlayerController.Instance.ChargeValue + _value;
 
-        if (newVal > 100f)
-            newVal = 100f;
+        //if (newVal > 100f)
+        //    newVal = 100f;
 
-        if (newVal > 50)
-            m_chargeImage.color = Color.yellow;
-        if (newVal > 75)
-            m_chargeImage.color = Color.red;
+        //if (newVal > 50)
+        //    m_chargeImage.color = Color.yellow;
+        //if (newVal > 75)
+        //    m_chargeImage.color = Color.red;
 
         m_chargeImage.fillAmount = newVal / 100f;
     }
@@ -87,6 +93,10 @@ public class UIManager : MonoBehaviour
             t -= Time.deltaTime;
             yield return null;
         }
+    }
+    public void ResetChargeBarInstant()
+    {
+        m_chargeImage.fillAmount = 0;
     }
     #endregion
 

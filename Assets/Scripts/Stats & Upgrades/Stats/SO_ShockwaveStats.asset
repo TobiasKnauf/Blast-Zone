@@ -18,7 +18,7 @@ MonoBehaviour:
   damage: 40
   speed: 10
   range: 5
-  numberOfProjectiles: 3
+  numberOfProjectiles: 1
   reloadTime: 0.2
   splashDamage: 0
   splashRadius: 0

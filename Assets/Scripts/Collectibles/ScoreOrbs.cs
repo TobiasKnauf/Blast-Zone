@@ -15,12 +15,12 @@ public class ScoreOrbs : Collectible
         transform.localScale = Vector2.one * Random.Range(0.2f, 0.4f);
         m_rb.AddForce(Random.insideUnitCircle * Time.deltaTime * 300f, ForceMode2D.Impulse);
 
-        Invoke(nameof(Despawn), 5f);
+        Invoke(nameof(Despawn), 30f);
     }
 
     public override void PickUp()
     {
-        float scoreValue = 15 * transform.localScale.x * PlayerController.Instance.ComboValue;
+        float scoreValue = GameManager.Instance.ScoreValue * transform.localScale.x/* * PlayerController.Instance.ComboValue*/;
         //float chargeValue = 7.5f * transform.localScale.x;
         float chargeValue = 7.5f * transform.localScale.x / Mathf.Clamp((GameManager.Instance.TimeSinceStart / 120f), 1, float.MaxValue);
 
