@@ -3,7 +3,15 @@ guid: b15bb35a196e513478ccfaa088c24aff
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Stats: {instanceID: 0}
+  - m_sprite: {instanceID: 0}
+  - rb: {instanceID: 0}
+  - renderer: {instanceID: 0}
+  - m_armorSprite: {instanceID: 0}
+  - anim: {instanceID: 0}
+  - explosion: {fileID: 1517395964774122649, guid: 72344e58e3f29d047904712e19256e2e, type: 3}
+  - slowPool: {fileID: 215198764788759501, guid: 503168eb5d5efb3439313debd914cbb9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

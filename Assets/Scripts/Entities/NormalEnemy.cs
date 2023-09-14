@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class NormalEnemy : Enemy
 {
-    protected override void OnDeathEffect()
+    public override void OnDeathEffect()
     {
+        base.OnDeathEffect();
 
     }
 
     protected override void UpdateEnemy()
     {
-        this.transform.position += Stats.MoveSpeed * Time.deltaTime * (Vector3)dir;
+        this.transform.position += MoveSpeed * Time.deltaTime * (Vector3)dir;
     }
 }

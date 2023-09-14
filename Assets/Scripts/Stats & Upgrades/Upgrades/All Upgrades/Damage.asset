@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82015f337eafe4648955a3f532c9406f, type: 3}
-  m_Name: SO_ProjectilesUpgrade
+  m_Name: Damage
   m_EditorClassIdentifier: 
-  Name: ProjectilesUpgrade
-  Icon: {fileID: 0}
-  DescriptionImage: {fileID: 21300000, guid: a3d753330dd22b44e9edaca9d34c236e, type: 3}
+  Name: Damage
+  Icon: {fileID: 21300000, guid: 0fe85ad6c778d884b82bf0f6b8ea2401, type: 3}
+  DescriptionText: Deal 50% more damage per attack
+  MaxLevels: 10
+  CurrentLevel: 0
+  Chance: 0.33
   WeaponTypes:
   - {fileID: 11400000, guid: fa3dd7b9e5c40d446b4de6ed88788e7f, type: 2}
+  - {fileID: 11400000, guid: 67b86beca5c6af7468bfa4809e7fadf9, type: 2}
   - {fileID: 11400000, guid: 54208233a04c61242903a8371d41ee41, type: 2}
   - {fileID: 11400000, guid: 34bb6534cab4bcd40bceb532106dddfa, type: 2}
   Upgrades:
-  - Type: 5
-    Amount: 2
+  - Type: 2
+    Amount: 50

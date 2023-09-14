@@ -13,6 +13,8 @@ public abstract class Spawner<T> : MonoBehaviour
     [SerializeField] protected Rect[] m_noSpawnAreas;
     [SerializeField] protected float m_noSpawnRadiusFromPlayer;
 
+    public bool ExplodeOnKill;
+    public bool SlowOnKill;
 
     protected Vector2 spawnPos;
     protected float timer;

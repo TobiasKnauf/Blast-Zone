@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Animator blackFadeImage;
 
+    [SerializeField] private TMP_Text timer;
+
 
     private void Awake()
     {
@@ -52,7 +55,13 @@ public class UIManager : MonoBehaviour
         m_scoreText.text = "" + GameManager.Instance.CurrentScore.ToString("F0");
 
         m_healthImage.fillAmount = PlayerController.Instance.PlayerStats.Health / PlayerController.Instance.PlayerStats.MaxHealth;
-        m_healthText.text = $"{PlayerController.Instance.PlayerStats.Health} / {PlayerController.Instance.PlayerStats.MaxHealth}";
+        m_healthText.text = $"{(int)PlayerController.Instance.PlayerStats.Health} / {PlayerController.Instance.PlayerStats.MaxHealth}";
+
+        //timer.text = TimeSpan.FromSeconds(GameManager.Instance.TimeSinceStart).ToString("mm:ss");
+
+        float minutes = Mathf.FloorToInt(GameManager.Instance.TimeSinceStart / 60);
+        float seconds = Mathf.FloorToInt(GameManager.Instance.TimeSinceStart % 60);
+        timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     #region Charge
@@ -181,6 +190,8 @@ public class UIManager : MonoBehaviour
 
     public void OpenUpgradeMenu()
     {
+        if (!UpgradeManager.Instance.UpgradesRemaining()) return;
+
         GameManager.Instance.IsPaused = true;
         m_upgradePanel.SetActive(true);
         // list 3 different upgrades

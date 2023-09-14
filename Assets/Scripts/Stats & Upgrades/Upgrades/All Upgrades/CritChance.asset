@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd0ca5efee1ac6640bdb1875c28cbcc4, type: 3}
+  m_Name: CritChance
+  m_EditorClassIdentifier: 
+  Name: Lucky Strikes
+  Icon: {fileID: 21300000, guid: ceb5dc7314af3344095435af9585159a, type: 3}
+  DescriptionText: Increase your crit chance by 10%
+  MaxLevels: 4
+  CurrentLevel: 0
+  Chance: 0.5
+  Upgrades:
+  - Type: 3
+    Amount: 0.1

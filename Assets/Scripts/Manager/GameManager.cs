@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 1;
                 TimeSinceStart += Time.deltaTime;
-                CurrentScore += Time.deltaTime/* * PlayerController.Instance.ComboValue*/;
+                // CurrentScore += Time.deltaTime/* * PlayerController.Instance.ComboValue*/;
 
             }
         }
@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
         ScoreValue = startScoreValue;
         PlayerController.Instance.PlayerStats.ResetStats();
         PlayerController.Instance.weaponStats.ResetStats();
+        UpgradeManager.Instance.ResetUpgrades();
         StartCoroutine(UIManager.Instance.OnRestart());
     }
 

@@ -9,8 +9,6 @@ public class Explosion : MonoBehaviour
 
     public void Detonate(float _splashDamage, float _radius, bool _hitAll = false)
     {
-        //this.transform.localScale = Vector2.one * _radius * 2f;
-
         Collider2D[] hits;
         
         if (!_hitAll)

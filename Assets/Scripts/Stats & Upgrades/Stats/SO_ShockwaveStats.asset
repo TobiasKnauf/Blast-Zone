@@ -16,10 +16,10 @@ MonoBehaviour:
   weapon: {fileID: 3653158647831884969, guid: c678422cd58ce8b46afeef364af17177, type: 3}
   weaponType: 2
   damage: 40
-  speed: 10
+  speed: 5
   range: 5
   numberOfProjectiles: 1
-  reloadTime: 0.2
+  reloadTime: 0.5
   splashDamage: 0
   splashRadius: 0
   knockback: 1500

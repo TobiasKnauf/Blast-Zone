@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3677806610456083500}
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 67b86beca5c6af7468bfa4809e7fadf9, type: 2}
+  damageText: {fileID: 8786131034971032226, guid: 40f6253669fc23144ba9f521d9e83397, type: 3}
 --- !u!50 &3677806610456083500
 Rigidbody2D:
   serializedVersion: 4

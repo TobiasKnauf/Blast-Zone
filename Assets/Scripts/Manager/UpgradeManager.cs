@@ -9,11 +9,15 @@ public class UpgradeManager : MonoBehaviour
 
     [SerializeField] private UpgradeButton[] upgradeButtons;
 
-    [SerializeField] private ScriptableUpgrade[] AllUpgrades;
+    public ScriptableUpgrade[] AllUpgrades;
 
     private void Awake()
     {
         Instance = this;
+    }
+    private void OnDisable()
+    {
+        ResetUpgrades();
     }
 
     public void SetUpgrades()
@@ -23,10 +27,35 @@ public class UpgradeManager : MonoBehaviour
             btn.SetUpgrade(GetRandomUpgrade());
         }
     }
-    
+    public void ResetUpgrades()
+    {
+        foreach (var u in AllUpgrades)
+        {
+            u.ResetUpgrade();
+        }
+    }
+
+    public bool UpgradesRemaining()
+    {
+        foreach (var u in AllUpgrades)
+        {
+            if (u.CurrentLevel < u.MaxLevels)
+                return true;
+        }
+
+        return false;
+    }
+
     public ScriptableUpgrade GetRandomUpgrade()
     {
         int rnd = Random.Range(0, AllUpgrades.Length);
+
+        if (Random.Range(0, 1f) > AllUpgrades[rnd].Chance)
+            return GetRandomUpgrade();
+
+        if (AllUpgrades[rnd].CurrentLevel >= AllUpgrades[rnd].MaxLevels)
+            return GetRandomUpgrade();
+
         return AllUpgrades[rnd];
     }
     public void ResetButtons()

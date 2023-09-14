@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IKillable
@@ -8,22 +9,19 @@ public abstract class Enemy : MonoBehaviour, IKillable
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private SpriteRenderer m_armorSprite;
     [SerializeField] private Animator anim;
+    [SerializeField] protected Explosion explosion;
+    [SerializeField] private Slowpool slowPool;
+    [SerializeField] private FloatingDamageText damageText;
     protected float health;
     protected int armor;
+
+    public float MoveSpeed;
 
     protected Vector2 dir;
 
     private float immuneTimer;
 
-    public void Init(Vector2 _spawnPos)
-    {
-        this.transform.position = _spawnPos;
-        GetComponent<BoxCollider2D>().isTrigger = true;
-        health = Stats.MaxHealth;
-
-        Invoke(nameof(EnableCollider), .25f);
-    }
-    private void Start()
+    protected virtual void Start()
     {
         if (Stats.Armor > 0)
             m_armorSprite.gameObject.SetActive(true);
@@ -31,6 +29,15 @@ public abstract class Enemy : MonoBehaviour, IKillable
         armor = Stats.Armor;
     }
 
+    public void Init(Vector2 _spawnPos)
+    {
+        this.transform.position = _spawnPos;
+        GetComponent<BoxCollider2D>().isTrigger = true;
+        health = Stats.MaxHealth;
+        MoveSpeed = Stats.MoveSpeed;
+
+        Invoke(nameof(EnableCollider), .25f);
+    }
     protected abstract void UpdateEnemy();
     private void Update()
     {
@@ -53,7 +60,7 @@ public abstract class Enemy : MonoBehaviour, IKillable
     {
         if (immuneTimer < GameManager.Instance.Tick) return;
 
-        if(armor > 0)
+        if (armor > 0)
         {
             armor--;
 
@@ -63,6 +70,9 @@ public abstract class Enemy : MonoBehaviour, IKillable
             return;
         }
 
+        FloatingDamageText d = Instantiate(damageText);
+        d.ShowDamage(_value, false, this.transform.position);
+
         health -= _value;
         if (health <= 0)
         {
@@ -71,12 +81,35 @@ public abstract class Enemy : MonoBehaviour, IKillable
         }
 
         anim.SetTrigger("Damage");
+
         rb.AddForce(_dir.normalized * _knockbackForce * Time.deltaTime, ForceMode2D.Impulse);
         immuneTimer = 0;
 
     }
 
-    protected abstract void OnDeathEffect();
+    public virtual void OnDeathEffect()
+    {
+        if (EnemySpawner.Instance.SlowOnKill)
+        {
+            if (Random.Range(0f, 1f) <= .2f)
+            {
+                Debug.Log("Slowpool");
+                Slowpool s = Instantiate(slowPool);
+                s.transform.position = this.transform.position;
+            }
+        }
+
+        if (EnemySpawner.Instance.ExplodeOnKill)
+        {
+            if (Random.Range(0f, 1f) <= .75f)
+            {
+                Debug.Log("Explode");
+                Explosion e = Instantiate(explosion);
+                e.transform.position = this.transform.position;
+                e.Detonate(Stats.MaxHealth / 2f, 3f, false);
+            }
+        }
+    }
 
     public void Die(Vector2 _dir, bool _spawnOrbs = true)
     {
@@ -100,6 +133,6 @@ public abstract class Enemy : MonoBehaviour, IKillable
         IKillable obj = _other.collider.GetComponent<IKillable>();
 
         if (obj != null && _other.collider.CompareTag("Player"))
-            obj.GetDamage(100, transform.up, 0);
+            obj.GetDamage(100, transform.up, 400);
     }
 }

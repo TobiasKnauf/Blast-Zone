@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0ca5efee1ac6640bdb1875c28cbcc4, type: 3}
-  m_Name: SO_MoveSpeedUpgrade
+  m_Script: {fileID: 11500000, guid: 1e8b4576b09946e4a8864e0ac01e43de, type: 3}
+  m_Name: SlowPoolEffect
   m_EditorClassIdentifier: 
-  Name: MoveSpeed Upgrade
+  Name: SlowPool
   Icon: {fileID: 0}
-  DescriptionImage: {fileID: 21300000, guid: a40ef7cf4f53c1447ba97d1c7007825a, type: 3}
-  Upgrades:
-  - Type: 2
-    Amount: 20
+  DescriptionText: Dead enemies have a 20% chance to leave behind a toxic pool that
+    slows other enemies
+  MaxLevels: 1
+  CurrentLevel: 0
+  Chance: 0.2
+  effectType: 0

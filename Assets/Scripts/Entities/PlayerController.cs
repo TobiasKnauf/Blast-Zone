@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour, IKillable
     [SerializeField] private ParticleSystem m_dashTrail;
     [SerializeField] private LaserBeam m_beam;
     [SerializeField] private SpriteRenderer m_armorSprite;
+    [SerializeField] private FloatingDamageText damageText;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private bool isDashing;
     private bool heldShooting;
 
+    public Action LevelUp;
     public int currentLevel = 0;
     public float ChargeValue;
     public float ComboValue;
@@ -260,6 +263,9 @@ public class PlayerController : MonoBehaviour, IKillable
             return;
         }
 
+        FloatingDamageText d = Instantiate(damageText);
+        d.ShowDamage(_value, false, this.transform.position);
+
         PlayerStats.Health -= _value;
         if (PlayerStats.Health <= 0)
         {
@@ -274,7 +280,7 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         knockback = true;
         rb.AddForce(_dir.normalized * _force * Time.deltaTime, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.05f);
         knockback = false;
     }
     public void Die(Vector2 _dir, bool _spawnOrbs = false)
@@ -328,6 +334,7 @@ public class PlayerController : MonoBehaviour, IKillable
     public void ResetCharge()
     {
         currentLevel++;
+        LevelUp?.Invoke();
         UIManager.Instance.ResetChargeBarInstant();
         ChargeValue = 0;
 

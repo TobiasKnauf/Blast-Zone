@@ -15,4 +15,4 @@ MonoBehaviour:
   maxHealth: 70
   armor: 0
   moveSpeed: 2
-  spawnChance: 0.2
+  spawnChance: 0.025

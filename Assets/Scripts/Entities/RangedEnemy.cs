@@ -8,15 +8,16 @@ public class RangedEnemy : Enemy
 
     private float shootTimer = 0f;
 
-    protected override void OnDeathEffect()
+    public override void OnDeathEffect()
     {
+        base.OnDeathEffect();
 
     }
 
     protected override void UpdateEnemy()
     {
         if (Vector2.Distance(PlayerController.Instance.transform.position, this.transform.position) >= 6f)
-            this.transform.position += Stats.MoveSpeed * Time.deltaTime * (Vector3)dir;
+            this.transform.position += MoveSpeed * Time.deltaTime * (Vector3)dir;
         else
         {
             if (shootTimer <= 0)

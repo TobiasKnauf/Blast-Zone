@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Laser
   - Border
+  - DamageCanvas
   layers:
   - Default
   - TransparentFX
