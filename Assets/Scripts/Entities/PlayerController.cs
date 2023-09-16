@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour, IKillable
     [SerializeField] private LaserBeam m_beam;
     [SerializeField] private SpriteRenderer m_armorSprite;
     [SerializeField] private FloatingDamageText damageText;
+
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+
+    [SerializeField] private Animator flashingHealth;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -64,6 +69,8 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         if (!GameManager.Instance.IsRunning || GameManager.Instance.IsPaused) return;
 
+        PlayerStats.Health = Mathf.Clamp(PlayerStats.Health, 0, 1000f);
+
         if (heldShooting)
             Shoot();
 
@@ -81,11 +88,20 @@ public class PlayerController : MonoBehaviour, IKillable
         if (ComboValue > 10)
             ComboValue = 10;
 
+
         #region Experience
         if (ChargeValue >= 100f)
         {
-            UIManager.Instance.OpenUpgradeMenu();
+            if (UpgradeManager.Instance.UpgradesRemaining())
+                UIManager.Instance.OpenUpgradeMenu();
+            else
+                ResetCharge();
         }
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.X))
+            ChargeValue = 100f;
+#endif
         #endregion
 
         // Timer increase
@@ -251,7 +267,10 @@ public class PlayerController : MonoBehaviour, IKillable
 
     public void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
     {
-        if (immuneTimer < GameManager.Instance.Tick) return;
+        if (immuneTimer < .2f) return;
+
+        CameraScript.Instance.CameraShake(impulseSource, 0.15f);
+        flashingHealth.SetTrigger("Damage");
 
         if (armor > 0)
         {
@@ -265,6 +284,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
         FloatingDamageText d = Instantiate(damageText);
         d.ShowDamage(_value, false, this.transform.position);
+
 
         PlayerStats.Health -= _value;
         if (PlayerStats.Health <= 0)
@@ -280,7 +300,7 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         knockback = true;
         rb.AddForce(_dir.normalized * _force * Time.deltaTime, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForSeconds(.075f);
         knockback = false;
     }
     public void Die(Vector2 _dir, bool _spawnOrbs = false)
@@ -320,7 +340,7 @@ public class PlayerController : MonoBehaviour, IKillable
                     PlayerStats.MoveSpeed += (PlayerStats.MoveSpeed / 100) * upgrade.Amount;
                     break;
                 case EPlayerUpgradeTypes.Crit_Chance:
-                    PlayerStats.CritChance = upgrade.Amount;
+                    PlayerStats.CritChance += upgrade.Amount;
                     break;
                 case EPlayerUpgradeTypes.Crit_Multiplier:
                     PlayerStats.CritMulitplier += (PlayerStats.CritMulitplier / 100) * upgrade.Amount;
@@ -337,6 +357,8 @@ public class PlayerController : MonoBehaviour, IKillable
         LevelUp?.Invoke();
         UIManager.Instance.ResetChargeBarInstant();
         ChargeValue = 0;
+
+        PlayerStats.Health += 100f;
 
         if (currentLevel % 2 == 0)
             GameManager.Instance.BuffEnemy();

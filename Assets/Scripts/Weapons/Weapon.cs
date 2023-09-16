@@ -43,15 +43,8 @@ public abstract class Weapon : MonoBehaviour
             Invoke(nameof(Destroy), 10f);
     }
 
-    protected virtual void UpdateProjectile()
+    protected virtual void Update()
     {
-
-    }
-
-    private void Update()
-    {
-        UpdateProjectile();
-
         if (destroyAfterDistance)
         {
             if (Vector2.Distance(startPos, this.transform.position) >= stats.Range)
@@ -117,6 +110,9 @@ public abstract class Weapon : MonoBehaviour
                     break;
                 case EWeaponUpgradeTypes.Projectiles:
                     stats.NumberOfProjectiles += (int)upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.SplashRadius:
+                    stats.SplashRadius += (int)upgrade.Amount;
                     break;
                 default:
                     break;

@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_gameOverPanel;
     [SerializeField] private GameObject m_pausePanel;
     [SerializeField] private GameObject m_upgradePanel;
+    [SerializeField] private GameObject m_upgradeIconContainer;
+
+    [SerializeField] private UpgradeIconSlot upgradeIconSlot;
+    [SerializeField] private TMP_Text upgradeIconDescription;
 
     [SerializeField] private TMP_Text m_scoreText;
     [SerializeField] private TMP_Text m_pauseScore;
@@ -188,6 +192,14 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.SwitchAction("Player");
     }
 
+    public void AddToUpgradeContainer(ScriptableUpgrade _upgrade)
+    {
+        UpgradeIconSlot s = Instantiate(upgradeIconSlot);
+        s.transform.SetParent(m_upgradeIconContainer.transform);
+        s.Init(_upgrade, upgradeIconDescription);
+        s.transform.localScale = Vector3.one;
+    }
+
     public void OpenUpgradeMenu()
     {
         if (!UpgradeManager.Instance.UpgradesRemaining()) return;
@@ -196,7 +208,6 @@ public class UIManager : MonoBehaviour
         m_upgradePanel.SetActive(true);
         // list 3 different upgrades
         UpgradeManager.Instance.SetUpgrades();
-        // show current upgrades and stats
     }
     public void CloseUpgradeMenu()
     {

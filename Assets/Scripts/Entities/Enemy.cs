@@ -1,3 +1,4 @@
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ public abstract class Enemy : MonoBehaviour, IKillable
     protected Vector2 dir;
 
     private float immuneTimer;
+
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
     protected virtual void Start()
     {
@@ -119,7 +122,8 @@ public abstract class Enemy : MonoBehaviour, IKillable
 
         OnDeathEffect();
 
-        CameraScript.Instance.StartCoroutine(CameraScript.Instance.Shake(.1f, .02f));
+        //CameraScript.Instance.StartCoroutine(CameraScript.Instance.Shake(.1f, .02f));
+        CameraScript.Instance.CameraShake(impulseSource, 0.05f);
         VisualsManager.Instance.PlayDeathParticles(this.transform.position, _dir);
         if (_spawnOrbs)
             GameManager.Instance.SpawnScoreOrbs(this.transform.position);

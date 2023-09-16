@@ -28,7 +28,7 @@ public class UpgradeButton : MonoBehaviour
             PlayerController.Instance.weaponStats.Weapon.ApplyUpgrade((WeaponUpgrade)_upgrade);
         else if (_upgrade is PlayerUpgrade)
             PlayerController.Instance.ApplyUpgrade((PlayerUpgrade)_upgrade);
-        else if(_upgrade is EffectUpgrade)
+        else if (_upgrade is EffectUpgrade)
         {
             EffectUpgrade u = (EffectUpgrade)_upgrade;
 
@@ -47,6 +47,12 @@ public class UpgradeButton : MonoBehaviour
 
 
         _upgrade.CurrentLevel++;
+
+        if (!UpgradeManager.Instance.ChosenUpgrades.Contains(_upgrade))
+        {
+            UpgradeManager.Instance.ChosenUpgrades.Add(_upgrade);
+            UIManager.Instance.AddToUpgradeContainer(_upgrade);
+        }
 
         PlayerController.Instance.ResetCharge();
         UIManager.Instance.CloseUpgradeMenu();

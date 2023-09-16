@@ -10,6 +10,7 @@ public enum EWeaponUpgradeTypes
     Attack_Range,
     Knockback,
     Projectiles,
+    SplashRadius
 }
 public enum EPlayerUpgradeTypes
 {

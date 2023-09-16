@@ -21,7 +21,6 @@ MonoBehaviour:
   WeaponTypes:
   - {fileID: 11400000, guid: fa3dd7b9e5c40d446b4de6ed88788e7f, type: 2}
   - {fileID: 11400000, guid: 54208233a04c61242903a8371d41ee41, type: 2}
-  - {fileID: 11400000, guid: 34bb6534cab4bcd40bceb532106dddfa, type: 2}
   Upgrades:
   - Type: 3
     Amount: 25

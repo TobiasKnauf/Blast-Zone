@@ -20,4 +20,14 @@ public class BossEnemy : Enemy
 
         healthbar.fillAmount = health / Stats.MaxHealth;
     }
+    public override void GetDamage(float _value, Vector2 _dir, float _knockbackForce)
+    {
+        base.GetDamage(_value, _dir, _knockbackForce / 3f);
+    }
+    public override void OnDeathEffect()
+    {
+        Explosion e = Instantiate(explosion);
+        e.transform.position = this.transform.position;
+        e.Detonate(Stats.MaxHealth / 2f, 6f, false);
+    }
 }

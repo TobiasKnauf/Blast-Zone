@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c9b4951b0b6b61a43a4ad7180ec45643, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.72907275, b: 0.16785331, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 82939304030112618}
   stats: {fileID: 11400000, guid: 34bb6534cab4bcd40bceb532106dddfa, type: 2}
-  damageText: {fileID: 8786131034971032226, guid: 40f6253669fc23144ba9f521d9e83397, type: 3}
   renderer: {fileID: 6551979020082718193}
 --- !u!61 &7531722230077642170
 BoxCollider2D:

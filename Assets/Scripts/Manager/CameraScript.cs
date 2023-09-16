@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,10 @@ public class CameraScript : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
-
-        Camera.main.transform.position = new Vector3(0, 0, -10);
+        //Camera.main.transform.position = new Vector3(0, 0, -10);
+    }
+    public void CameraShake(CinemachineImpulseSource _source, float _force)
+    {
+        _source.GenerateImpulseWithForce(_force);
     }
 }

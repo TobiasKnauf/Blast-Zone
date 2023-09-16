@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: SlowPoolEffect
   m_EditorClassIdentifier: 
   Name: SlowPool
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 907daf7a37cb8d047a9859a657e66493, type: 3}
   DescriptionText: Dead enemies have a 20% chance to leave behind a toxic pool that
     slows other enemies
   MaxLevels: 1
   CurrentLevel: 0
-  Chance: 0.2
+  Chance: 0.1
   effectType: 0

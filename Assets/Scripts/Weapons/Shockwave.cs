@@ -7,6 +7,7 @@ public class Shockwave : Weapon
     [SerializeField] private SpriteRenderer renderer;
 
     private float distanceTravelledPercent;
+    private float maxTravellDistance = 4f;
 
     public override void Launch(Vector2 _dir, int _noDmgLayer)
     {
@@ -22,13 +23,16 @@ public class Shockwave : Weapon
 
     }
 
-    protected override void UpdateProjectile()
+    protected override void Update()
     {
-        base.UpdateProjectile();
+        base.Update();
 
-        distanceTravelledPercent = Vector2.Distance(startPos, this.transform.position) / stats.Range;
+        if (Vector2.Distance(startPos, this.transform.position) >= maxTravellDistance)
+            Destroy();
 
-        this.transform.localScale += Vector3.one * Time.deltaTime * 3f * stats.Range * .1f;
+        distanceTravelledPercent = Vector2.Distance(startPos, this.transform.position) / maxTravellDistance;
+
+        this.transform.localScale += Vector3.one * (Time.deltaTime * 3f) * stats.Range * .1f;
         renderer.color = new Color(
                 renderer.color.r,
                 renderer.color.g,
@@ -40,5 +44,37 @@ public class Shockwave : Weapon
 
         knockback = Mathf.Lerp(stats.Knockback, stats.Knockback / stats.Range, distanceTravelledPercent); ;
         Mathf.Clamp(knockback, stats.Knockback / 2f, float.MaxValue);
+    }
+    public override void ApplyUpgrade(WeaponUpgrade _upgrade)
+    {
+        foreach (var upgrade in _upgrade.Upgrades)
+        {
+            switch (upgrade.Type)
+            {
+                case EWeaponUpgradeTypes.Projectile_Speed:
+                    stats.Speed += (stats.Speed / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Attack_Speed:
+                    stats.ReloadTime -= (stats.ReloadTime / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Damage:
+                    stats.Damage += (stats.Damage / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Attack_Range:
+                    stats.Range += upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Knockback:
+                    stats.Knockback += (stats.Knockback / 100) * upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.Projectiles:
+                    stats.NumberOfProjectiles += (int)upgrade.Amount;
+                    break;
+                case EWeaponUpgradeTypes.SplashRadius:
+                    stats.SplashRadius += (int)upgrade.Amount;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

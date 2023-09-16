@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Projectile Speed (not laser)
   m_EditorClassIdentifier: 
   Name: Projectile Speed
-  Icon: {fileID: 21300000, guid: 771bea0feb7d4234080f1cf3ab84135f, type: 3}
+  Icon: {fileID: 21300000, guid: 8ea43aab49f9fe74a921a7a9b6446f44, type: 3}
   DescriptionText: Your projectiles travel 25% faster
   MaxLevels: 4
   CurrentLevel: 0

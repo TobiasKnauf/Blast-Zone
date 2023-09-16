@@ -17,7 +17,7 @@ public class Rocket : Weapon
 
     protected override void OnDeathEffect()
     {
-        float damage = crits ? stats.SplashDamage * PlayerController.Instance.PlayerStats.CritMulitplier : stats.SplashDamage;
+        float damage = crits ? (stats.Damage / 2f) * PlayerController.Instance.PlayerStats.CritMulitplier : stats.Damage / 2f;
 
         Explosion e = Instantiate(explosion);
         e.transform.position = this.transform.position;

@@ -63,10 +63,9 @@ public class GameManager : MonoBehaviour
 
     public void BuffEnemy()
     {
-        Debug.Log("Enemies buffed");
         foreach (var enemy in enemyStats)
         {
-            enemy.MaxHealth += (enemy.MaxHealth / 100) * 33f;
+            enemy.MaxHealth += (enemy.MaxHealth / 100) * 15f;
         }
     }
 

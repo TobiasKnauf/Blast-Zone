@@ -11,6 +11,8 @@ public class UpgradeManager : MonoBehaviour
 
     public ScriptableUpgrade[] AllUpgrades;
 
+    [HideInInspector] public List<ScriptableUpgrade> ChosenUpgrades;
+
     private void Awake()
     {
         Instance = this;
@@ -39,8 +41,18 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (var u in AllUpgrades)
         {
+            if(u is WeaponUpgrade)
+            {
+                WeaponUpgrade w = (WeaponUpgrade)u;
+
+                if (!w.WeaponTypes.Contains(PlayerController.Instance.weaponStats)) 
+                    continue;
+            }
+
             if (u.CurrentLevel < u.MaxLevels)
+            {
                 return true;
+            }
         }
 
         return false;
@@ -48,7 +60,17 @@ public class UpgradeManager : MonoBehaviour
 
     public ScriptableUpgrade GetRandomUpgrade()
     {
+        if (!UpgradesRemaining()) return null;
+
         int rnd = Random.Range(0, AllUpgrades.Length);
+
+        if (AllUpgrades[rnd] is WeaponUpgrade)
+        {
+            WeaponUpgrade w = (WeaponUpgrade)AllUpgrades[rnd];
+
+            if (!w.WeaponTypes.Contains(PlayerController.Instance.weaponStats))
+                return GetRandomUpgrade();
+        }
 
         if (Random.Range(0, 1f) > AllUpgrades[rnd].Chance)
             return GetRandomUpgrade();

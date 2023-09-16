@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Knockback
   m_EditorClassIdentifier: 
   Name: Knockback
-  Icon: {fileID: 21300000, guid: 13402bbca8f058047a0cf34522b2d6b2, type: 3}
+  Icon: {fileID: 21300000, guid: 6d5c5b8bd362fed4da3edbdc79373b66, type: 3}
   DescriptionText: Knock your enemies back 10% further
   MaxLevels: 5
   CurrentLevel: 0

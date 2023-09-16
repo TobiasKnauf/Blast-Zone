@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Attack Speed (not laser)
   m_EditorClassIdentifier: 
   Name: Attack Speed
-  Icon: {fileID: 21300000, guid: f64da11fb87711949b4914258d5337cd, type: 3}
+  Icon: {fileID: 21300000, guid: 771bea0feb7d4234080f1cf3ab84135f, type: 3}
   DescriptionText: Your attacks reload 25% faster
   MaxLevels: 4
   CurrentLevel: 0

@@ -15,12 +15,12 @@ MonoBehaviour:
   name: Laser
   weapon: {fileID: 3677806610456083491, guid: 16ba74544b94c4343918621d5365d259, type: 3}
   weaponType: 1
-  damage: 1
+  damage: 20
   speed: 0
   range: 1
   numberOfProjectiles: 1
   reloadTime: 0
   splashDamage: 0
   splashRadius: 0
-  knockback: 50
+  knockback: 500
   pierces: 1
