@@ -11240,7 +11240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: wasd to move \ space to dash \ lmb to shoot
+  m_text: wasd to move \ space to dash \ lmb to shoot \ Tab to pause
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 431a292901c57774db8fcb0b5ab583c5, type: 2}
   m_sharedMaterial: {fileID: 8852415733735075756, guid: 431a292901c57774db8fcb0b5ab583c5, type: 2}
@@ -12654,7 +12654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87631a22f4aa3f749b93c8c6fa1610ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c878cfd37cb61314ab2dda69e89f4269, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19281,7 +19281,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87631a22f4aa3f749b93c8c6fa1610ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c878cfd37cb61314ab2dda69e89f4269, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
