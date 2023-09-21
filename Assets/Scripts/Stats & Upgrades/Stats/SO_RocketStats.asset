@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Rocket
   weapon: {fileID: 1422660976084129593, guid: bd44ef9cff94bc54f92dab7ae45d76c4, type: 3}
   weaponType: 3
-  damage: 75
+  damage: 60
   speed: 10
   range: 7.5
   numberOfProjectiles: 1

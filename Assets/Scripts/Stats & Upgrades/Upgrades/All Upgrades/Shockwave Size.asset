@@ -15,9 +15,9 @@ MonoBehaviour:
   Name: Shockwave Size
   Icon: {fileID: 21300000, guid: d93fb641c21a89e4f9d42ebc68ccd2c6, type: 3}
   DescriptionText: Your shockwave increases in size by 25%
-  MaxLevels: 4
+  MaxLevels: 1
   CurrentLevel: 0
-  Chance: 0.4
+  Chance: 0.1
   WeaponTypes:
   - {fileID: 11400000, guid: 34bb6534cab4bcd40bceb532106dddfa, type: 2}
   Upgrades:

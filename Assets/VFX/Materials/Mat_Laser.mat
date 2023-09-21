@@ -56,7 +56,7 @@ Material:
     - _Speed: 3.44
     - _Thickness: 1.19
     m_Colors:
-    - _Color: {r: 765.6482, g: 31.539602, b: 3.6115565, a: 1}
+    - _Color: {r: 67.79352, g: 2.839519, b: 0.35493988, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

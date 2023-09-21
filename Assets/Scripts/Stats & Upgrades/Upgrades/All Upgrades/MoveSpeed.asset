@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Sprint
   Icon: {fileID: 21300000, guid: a9037c4594e22cb4f955e5c19dec40c5, type: 3}
-  DescriptionText: Increase your movement speed by 50%
+  DescriptionText: Increase your movement speed by 25%
   MaxLevels: 3
   CurrentLevel: 0
   Chance: 0.66
   Upgrades:
   - Type: 2
-    Amount: 50
+    Amount: 25

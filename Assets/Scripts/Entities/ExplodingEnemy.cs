@@ -10,7 +10,7 @@ public class ExplodingEnemy : Enemy
     {
         Explosion e = Instantiate(explosion);
         e.transform.position = this.transform.position;
-        e.Detonate(Stats.MaxHealth / 2f, 3f, true);
+        e.Detonate(Stats.MaxHealth / 2f, 2f, true);
     }
 
     protected override void UpdateEnemy()

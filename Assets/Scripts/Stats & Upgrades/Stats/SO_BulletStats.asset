@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bullet
   weapon: {fileID: 5922714704788972774, guid: eb7293d556dd65d4fa1c7db5c6d7d7e3, type: 3}
   weaponType: 0
-  damage: 25
+  damage: 45
   speed: 20
   range: 7.5
   numberOfProjectiles: 1

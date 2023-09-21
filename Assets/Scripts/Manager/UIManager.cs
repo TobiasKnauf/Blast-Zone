@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator blackFadeImage;
 
     [SerializeField] private TMP_Text timer;
+    [SerializeField] private TMP_Text levelText;
 
 
     private void Awake()
@@ -66,6 +67,8 @@ public class UIManager : MonoBehaviour
         float minutes = Mathf.FloorToInt(GameManager.Instance.TimeSinceStart / 60);
         float seconds = Mathf.FloorToInt(GameManager.Instance.TimeSinceStart % 60);
         timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        levelText.text = "Level: " + PlayerController.Instance.currentLevel;
     }
 
     #region Charge

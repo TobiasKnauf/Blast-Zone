@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class AirstrikeSpawner : Spawner<Airstrike>
 {
+    protected override void Update()
+    {
+        base.Update();
+
+        m_timeUntilNextSpawn = 4 - (.125f * (PlayerController.Instance.currentLevel + 1));
+
+        if (m_timeUntilNextSpawn < 2f)
+            m_timeUntilNextSpawn = 2f;
+
+
+    }
     protected override bool IsNonValidPosition(Vector2 _pos)
     {
         if (Vector2.Distance(spawnPos, PlayerController.Instance.transform.position) > 5f)

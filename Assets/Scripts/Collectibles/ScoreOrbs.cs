@@ -23,7 +23,7 @@ public class ScoreOrbs : Collectible
         float scoreValue = GameManager.Instance.ScoreValue * transform.localScale.x/* * PlayerController.Instance.ComboValue*/;
         //float chargeValue = 7.5f * transform.localScale.x;
 
-        float chargeValue = (7.5f * transform.localScale.x) / (Mathf.Clamp((PlayerController.Instance.currentLevel + 1), 1, 4) * 1.25f);
+        float chargeValue = (7.5f * transform.localScale.x) / ((PlayerController.Instance.currentLevel + 1) * .75f);
 
 
         GameManager.Instance.CurrentScore += scoreValue;
@@ -41,7 +41,7 @@ public class ScoreOrbs : Collectible
         if (!GameManager.Instance.IsRunning || GameManager.Instance.IsPaused) return;
 
         float distanceToPlayer = Vector2.Distance(PlayerController.Instance.transform.position, this.transform.position);
-        if (distanceToPlayer <= 6f)
+        if (distanceToPlayer <= 8f)
         {
             Vector2 dir = PlayerController.Instance.transform.position - this.transform.position;
             m_rb.AddForce(Time.deltaTime * dir * (1 / distanceToPlayer) * (PlayerController.Instance.PlayerStats.MoveSpeed * 8f), ForceMode2D.Force);

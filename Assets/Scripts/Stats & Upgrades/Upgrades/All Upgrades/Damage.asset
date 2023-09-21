@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Damage
   Icon: {fileID: 21300000, guid: 0fe85ad6c778d884b82bf0f6b8ea2401, type: 3}
   DescriptionText: Deal 50% more damage per attack
-  MaxLevels: 6
+  MaxLevels: 5
   CurrentLevel: 0
   Chance: 0.75
   WeaponTypes:

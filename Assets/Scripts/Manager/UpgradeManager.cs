@@ -27,7 +27,17 @@ public class UpgradeManager : MonoBehaviour
         foreach (var btn in upgradeButtons)
         {
             btn.SetUpgrade(GetRandomUpgrade());
+#if !UNITY_EDITOR
+            StartCoroutine(DelayButton(btn.Button));
+#endif
         }
+    }
+
+    private IEnumerator DelayButton(Button b)
+    {
+        b.interactable = false;
+        yield return new WaitForSecondsRealtime(1.5f);
+        b.interactable = true;
     }
     public void ResetUpgrades()
     {
@@ -41,11 +51,11 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (var u in AllUpgrades)
         {
-            if(u is WeaponUpgrade)
+            if (u is WeaponUpgrade)
             {
                 WeaponUpgrade w = (WeaponUpgrade)u;
 
-                if (!w.WeaponTypes.Contains(PlayerController.Instance.weaponStats)) 
+                if (!w.WeaponTypes.Contains(PlayerController.Instance.weaponStats))
                     continue;
             }
 

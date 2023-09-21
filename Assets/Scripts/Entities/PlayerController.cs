@@ -100,7 +100,10 @@ public class PlayerController : MonoBehaviour, IKillable
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.X))
+        {
             ChargeValue = 100f;
+            GameManager.Instance.TimeSinceStart += 60f;
+        }
 #endif
         #endregion
 
@@ -137,12 +140,12 @@ public class PlayerController : MonoBehaviour, IKillable
             {
                 m_beam.gameObject.SetActive(true);
                 m_beam.Launch(-transform.right, this.gameObject.layer);
-                SoundManager.Instance.PlaySound(ESound.Laser);
+                // SoundManager.Instance.PlaySound(ESound.Laser);
             }
             if (_ctx.canceled)
             {
                 m_beam.gameObject.SetActive(false);
-                SoundManager.Instance.StopSound(ESound.Laser);
+                // SoundManager.Instance.StopSound(ESound.Laser);
             }
         }
     }

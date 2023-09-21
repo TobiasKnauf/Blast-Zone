@@ -19,10 +19,10 @@ public class EnemySpawner : Spawner<Enemy>
     {
         base.Update();
 
-        m_timeUntilNextSpawn -= Time.deltaTime * GameManager.Instance.TimeSinceStart / 10000f;
+        m_timeUntilNextSpawn = 1.5f - ((PlayerController.Instance.currentLevel + 1) * 0.125f);
 
-        if (m_timeUntilNextSpawn < .25f)
-            m_timeUntilNextSpawn = .25f;
+        if (m_timeUntilNextSpawn < .15f)
+            m_timeUntilNextSpawn = .15f;
 
 
     }

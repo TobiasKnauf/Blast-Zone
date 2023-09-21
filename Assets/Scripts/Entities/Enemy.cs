@@ -109,7 +109,7 @@ public abstract class Enemy : MonoBehaviour, IKillable
                 Debug.Log("Explode");
                 Explosion e = Instantiate(explosion);
                 e.transform.position = this.transform.position;
-                e.Detonate(Stats.MaxHealth / 2f, 3f, false);
+                e.Detonate(Stats.MaxHealth / 4f, 3f, false);
             }
         }
     }

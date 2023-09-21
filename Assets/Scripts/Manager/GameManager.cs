@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -20,11 +21,13 @@ public class GameManager : MonoBehaviour
     private float startScoreValue = 15f;
     public float ScoreValue;
 
-    public float TimeSinceStart { get; private set; }
+    public float TimeSinceStart { get; set; }
 
     public float Tick = 0.1f;
 
     public float CurrentScore;
+
+    private Dictionary<EnemyStats, float> enemiesStartHealth;
 
     private void Awake()
     {
@@ -36,6 +39,12 @@ public class GameManager : MonoBehaviour
         SwitchAction("Freeze");
         ScoreValue = startScoreValue;
 
+        enemiesStartHealth = new Dictionary<EnemyStats, float>();
+
+        foreach (var enemy in enemyStats)
+        {
+            enemiesStartHealth.Add(enemy, enemy.MaxHealth);
+        }
     }
 
     private void Update()
@@ -65,7 +74,15 @@ public class GameManager : MonoBehaviour
     {
         foreach (var enemy in enemyStats)
         {
-            enemy.MaxHealth += (enemy.MaxHealth / 100) * 15f;
+            enemy.MaxHealth += (enemy.MaxHealth / 100) * 25f;
+
+            //foreach (var h in enemiesStartHealth)
+            //{
+            //    if (h.Key != enemy) continue;
+
+            //    enemy.MaxHealth += h.Value / 2f;
+                    
+            //}
         }
     }
 

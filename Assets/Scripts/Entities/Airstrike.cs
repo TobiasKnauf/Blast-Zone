@@ -19,7 +19,8 @@ public class Airstrike : MonoBehaviour
         transform.position = _pos;
         startTime = Time.time;
         explosionRadius = Random.Range(2f, 7f);
-        timeTillExplode = explosionRadius - (explosionRadius / 2f) / 2f;
+        float timeMultiplicator = Mathf.Clamp(1f - (0.0125f * (PlayerController.Instance.currentLevel + 1)), 0.5f, 1f);
+        timeTillExplode = explosionRadius - (explosionRadius / 2f) / timeMultiplicator;
         m_outlineSprite.transform.localScale = Vector2.one * explosionRadius * 2;
         Invoke(nameof(Detonate), timeTillExplode);
     }
@@ -41,7 +42,7 @@ public class Airstrike : MonoBehaviour
         damage += (damage / 100) * 15f;
 
         if (Vector2.Distance(this.transform.position, PlayerController.Instance.transform.position) <= explosionRadius)
-            PlayerController.Instance.GetDamage(damage, PlayerController.Instance.transform.position - this.transform.position, 500);
+            PlayerController.Instance.GetDamage(300, PlayerController.Instance.transform.position - this.transform.position, 500);
 
         Enemy[] temp = EnemySpawner.Instance.AllEntities.ToArray();
         foreach (Enemy e in temp)
